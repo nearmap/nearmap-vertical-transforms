@@ -24,8 +24,8 @@ transformations. The grids are the ones used internally at Nearmap.
 To perform these transformations, you need to install [GDAL](https://gdal.org/download.html). GDAL contains both the command line utitlies and programmatic access to the required subsystem which will perform the work.
 
 This was tested on:
-* MacOS 11.2, GDAL 2.4.2
-* <TBD> GDAL 2.0 ~ Sep 2015
+* MacOS 11.2, GDAL 2.4.2, proj 6.3.0
+* Ubuntu 16.04, GDAL 2.2.2, proj 4.9.2
   
 A unix-like operating system is recommended. GDAL is available under windows from from [OSGeo4W](https://trac.osgeo.org/osgeo4w/) in addition to the Conda distribution mentioned on the GDAL page. Running the commands should be possible under the windows `cmd` interpreter with appropriate edits to the command syntax.
 
