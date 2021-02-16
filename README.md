@@ -5,8 +5,8 @@ between ellipsoidal and geoidal heights.
 
 ## Background
 
-Nearmap APIs typicall use geoidal heights. For example, [DSM and True Ortho API](https://docs.nearmap.com/display/ND/DSM+and+TrueOrtho+API#/staticmap/get_coverage_json)
-returns heights in one of country local vertical datums:
+Nearmap APIs typically use geoidal heights. For example, [DSM and True Ortho API](https://docs.nearmap.com/display/ND/DSM+and+TrueOrtho+API#/staticmap/get_coverage_json)
+returns heights in one of the country local vertical datums:
 
 * Australia - AHD (AusGeoid09)
 * US - EGM2008
@@ -18,10 +18,21 @@ datum across many use cases.
 
 In some cases, a conversion to ellipsoidal height is desirable. This repository
 provides the transformation grids and example GDAL commands to perform these
-transformations. The grids are as used internally at Nearmap.
+transformations. The grids are the ones used internally at Nearmap.
 
 ## Dependencies
 To perform these transformations, you need to install [GDAL](https://gdal.org/download.html). GDAL contains both the command line utitlies and programmatic access to the required subsystem which will perform the work.
+
+This was tested on:
+* MacOS 11.2, GDAL 2.4.2
+* <TBD> GDAL 2.0 ~ Sep 2015
+  
+A unix-like operating system is recommended. GDAL is available under windows from from [OSGeo4W](https://trac.osgeo.org/osgeo4w/) in addition to the Conda distribution mentioned on the GDAL page. Running the commands should be possible under the windows `cmd` interpreter with appropriate edits to the command syntax.
+
+## Installation and running
+1. Download/clone this repository to get access to the grid files.
+1. Ensure that GDAL is installed by running `cs2cs` command
+1. Run the commands specified below
 
 ## Australia
 
@@ -34,13 +45,13 @@ WGS84/GDA2020 Ellipsoidal Height|151.76523344167|-32.9295737833|52.857|
 
 
 
-Convert from AHD geoid to WGS84 Ellipsoid
+Convert from AHD geoid to WGS84 ellipsoid
 ```
 $> echo  151.76523344 -32.92957378 27.14702027 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./AU/AUSGeoid09.gtx -f "%.8f"
 151.76523344	-32.92957378 52.85700001
 ```
 
-Convert from WGS84 Ellipsoid to AHD geoid
+Convert from WGS84 ellipsoid to AHD geoid
 ```
 $> echo 151.76523344167 -32.9295737833 52.857 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./AU/AUSGeoid09.gtx -f "%.8f"
 151.76523344	-32.92957378 27.14702027
