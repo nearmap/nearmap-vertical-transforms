@@ -34,26 +34,55 @@ A unix-like operating system is recommended. GDAL is available under windows fro
 1. Ensure that GDAL is installed by running `cs2cs` command
 1. Run the commands specified below
 
+## Global
+This section provides guidance on performing global geoid conversions such as EGM96.
+
+Expected values
+
+|Datum|Longitude|Latitude|Altitude|
+|---|---|---|---|
+|WGS84 Ellipsoidal Height|-122.30926|47.56949|0.0|
+|EGM96 Height|-122.30926|47.56949|22.30|
+
+
+#### EGM96 to WGS84
+
+```
+$> echo -122.30926 47.56949 22.30345079 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +datum=WGS84 +geoidgrids=./GLOBAL/egm96_15.gtx -f "%.8f"
+
+-122.30926000	47.56949000 0.00000000
+```
+
+
+#### WGS84 to EGM96
+```
+$> echo -122.30926 47.56949 0.0 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +datum=WGS84 +geoidgrids=./GLOBAL/egm96_15.gtx -f "%.8f"
+
+-122.30926000	47.56949000 22.30345079
+```
+
 ## Australia
 
 Expected values
 
 |Datum|Longitude|Latitude|Altitude|
 |---|---|---|---|
-WGS84/GDA2020 Ellipsoidal Height|151.76523344167|-32.9295737833|52.857|
+|WGS84/GDA2020 Ellipsoidal Height|151.76523344167|-32.9295737833|52.857|
 |AHD Height|151.76523344167|-32.9295737833|27.169|
 
 
 
-Convert from AHD geoid to WGS84 ellipsoid
+#### AHD to WGS84
 ```
 $> echo  151.76523344 -32.92957378 27.14702027 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./AU/AUSGeoid09.gtx -f "%.8f"
+
 151.76523344	-32.92957378 52.85700001
 ```
 
-Convert from WGS84 ellipsoid to AHD geoid
+#### WGS84 to AHD
 ```
 $> echo 151.76523344167 -32.9295737833 52.857 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./AU/AUSGeoid09.gtx -f "%.8f"
+
 151.76523344	-32.92957378 27.14702027
 ```
 
@@ -65,15 +94,18 @@ From https://vdatum.noaa.gov/vdatumweb/vdatumweb
 |WGS84 Ellipsoidal Height|-122.30926|47.56949|0.0|
 |EGM2008 Height|-122.30926|47.56949|22.65|
 
-Convert from EGM2008 geoid to WGS84 ellipsoid
+#### EGM2008 to WGS84
 ```
-echo -122.30926 47.56949 0.0 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./US/USGG2012.gtx -f "%.6f"
+$> echo -122.30926 47.56949 0.0 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./US/USGG2012.gtx -f "%.6f"
+
 -122.309260	47.569490 -22.652655
 ```
 
-Convert from WGS84 ellipsoid to EGM2008 geoid
+#### WGS84 to EGM2008
+
 ```
-echo -122.30926 47.56949 0.0 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./US/USGG2012.gtx -f "%.6f"
+$> echo -122.30926 47.56949 0.0 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./US/USGG2012.gtx -f "%.6f"
+
 -122.309260	47.569490 22.652655
 ```
 
