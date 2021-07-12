@@ -93,6 +93,8 @@ From https://vdatum.noaa.gov/vdatumweb/vdatumweb
 |---|---|---|---|
 |WGS84 Ellipsoidal Height|-122.30926|47.56949|0.0|
 |EGM2008 Height|-122.30926|47.56949|22.65|
+|NAD83 Height|-122.30926|47.56949|23.54|
+
 
 #### EGM2008 to WGS84
 ```
@@ -107,6 +109,22 @@ $> echo -122.30926 47.56949 0.0 | cs2cs +proj=longlat +datum=WGS84 +to +proj=lon
 $> echo -122.30926 47.56949 0.0 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +geoidgrids=./US/USGG2012.gtx -f "%.6f"
 
 -122.309260	47.569490 22.652655
+```
+
+#### NAD83 to WGS84
+
+```
+$> echo -122.30926 47.56949 0 | cs2cs -I +proj=longlat +datum=WGS84 +to +proj=longlat +towgs84=-0.99343,1.90331,0.52655,-0.02591467,-0.00942645,-0.01159935,-0.00171504 +geoidgrids=./US/g2012a_conus.gtx -f "%.8f"
+
+-122.30926000	47.56949000 -23.53853105
+```
+
+#### WGS84 to NAD83
+
+```
+$> echo -122.30926 47.56949 0.0 | cs2cs +proj=longlat +datum=WGS84 +to +proj=longlat +towgs84=-0.99343,1.90331,0.52655,-0.02591467,-0.00942645,-0.01159935,-0.00171504 +geoidgrids=./US/g2012a_conus.gtx -f "%.8f"
+
+-122.30926000	47.56949000 23.53853105
 ```
 
 
